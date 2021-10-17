@@ -1,0 +1,27 @@
+{
+  "name": "@andres-lowrie/declarative",
+  "version": "1.0.0",
+  "description": "Set of functions for more declarative programming",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "node tests/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andres-lowrie/declarative.git"
+  },
+  "keywords": [
+    "js",
+    "declarative",
+    "functions"
+  ],
+  "author": "Andres Lowrie",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/andres-lowrie/declarative/issues"
+  },
+  "homepage": "https://github.com/andres-lowrie/declarative#readme"
+}
