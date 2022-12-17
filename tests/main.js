@@ -126,6 +126,70 @@ const cases = [
     assert.deepEqual(got, want)
   }),
 
+  test('assign: It should call Object.assign', () => {
+    const o1 = { foo: 1 }
+    const o2 = { bar: 2 }
+    const want = Object.assign(o1, o2)
+    const got = mod.assign(o1, o2)
+    assert.deepEqual(got, want)
+  }),
+
+  test('mkMerge: It should offload to assign when objects passed', () => {
+    const o1 = { foo: 1 }
+    const o2 = { bar: 2 }
+    const want = Object.assign(o1, o2)
+    const got = mod.mkMerge()(o1, o2)
+    assert.deepEqual(got, want)
+  }),
+
+  test('mkMerge: It should not mutate by default for objects', () => {
+    const o1 = { foo: 1 }
+    const o2 = { bar: 2 }
+    const want = Object.assign({}, o1, o2)
+    const got = mod.mkMerge()(o1, o2)
+    assert.deepEqual(got, want)
+    assert.strictEqual(o1.hasOwnProperty('bar'), false)
+  }),
+
+  test('mkMerge: It should allow to mutate objects', () => {
+    const o1 = { foo: 1 }
+    const o2 = { bar: 2 }
+    const want = Object.assign({}, o1, o2)
+    const got = mod.mkMerge(true)(o1, o2)
+    assert.deepStrictEqual(got, want)
+    assert.strictEqual(o1.hasOwnProperty('bar'), true)
+  }),
+
+  test('mkMerge: It should offload to concat when arrays passed', () => {
+    const o1 = [1]
+    const o2 = [2]
+    const o3 = [3]
+    const want = [1, 2, 3]
+    const got = mod.mkMerge()(o1, o2, o3)
+    assert.deepEqual(got, want)
+  }),
+
+  test('mkMerge: It should not mutate by default for arrays', () => {
+    const o1 = [1]
+    const o2 = [2]
+    const o3 = [3]
+    const want = [1, 2, 3]
+    const got = mod.mkMerge()(o1, o2, o3)
+    assert.deepEqual(got, want)
+    assert.strictEqual(o1.includes(2), false)
+  }),
+
+  test('mkMerge: It should allow to mutate arrays', () => {
+    const o1 = [1]
+    const o2 = [2]
+    const o3 = [3]
+    const want = [1, 2, 3]
+    const got = mod.mkMerge(true)(o1, o2, o3)
+    assert.deepStrictEqual(got, want)
+    assert.strictEqual(o1.includes(2), true)
+    assert.strictEqual(o1.includes(3), true)
+  }),
+
   // Comparison
   // Boolean question
   test('isTrue: It should check if something is "true"', () => {

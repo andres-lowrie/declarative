@@ -37,6 +37,32 @@ exports.fromEntries = a => Object.fromEntries(a)
 
 exports.fromPairs = a => Object.fromEntries(a)
 
+exports.assign = Object.assign
+
+exports.mkMerge = (mutate = false) => (...args) => {
+  if (args.every(exports.isObject)) {
+    if (mutate) {
+      return exports.assign(...args)
+    } else {
+      return exports.assign({}, ...args)
+    }
+  }
+
+  if (args.every(exports.isArray)) {
+    if (mutate) {
+      const [head, ...tail] = args
+      head.push(...tail.flatMap(exports.id))
+      return head
+    } else {
+      return [].concat(...args)
+    }
+  }
+}
+
+exports.merge = exports.mkMerge(true)
+exports.impureMerge = exports.merge
+exports.pureMerge = exports.mkMerge(false)
+
 // Comparison
 exports.isTrue = a => a === true
 
