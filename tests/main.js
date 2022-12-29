@@ -520,6 +520,32 @@ const cases = [
     assert.strictEqual(false, mod._isNotEmpty({})())
     assert.strictEqual(true, mod._isNotEmpty([1])())
     assert.strictEqual(true, mod._isNotEmpty({ a: 1 })())
+  }),
+
+  // Lazy things
+  test('any: It should return first function in array that passes the predicatee', () => {
+    const pred = mod.isTrue
+    const arr = [mod._isFalse(true), mod._isTrue(true), () => 'break if this']
+    const got = mod.any(pred, arr)
+    assert.notStrictEqual(got, false)
+    assert.notStrictEqual(got, 'break if this')
+    assert.notStrictEqual(typeof got, 'function')
+  }),
+  test('any: It should handle mixed functions and non functions in array', () => {
+    const pred = a => a === 'xxx'
+    const arr = [mod._isFalse(true), mod._isTrue(true), 'xxx']
+    const got = mod.any(pred, arr)
+    assert.notStrictEqual(got, false)
+    assert.notStrictEqual(typeof got, 'function')
+  }),
+  test('anyTrue: It should return true if any item is true', () => {
+    assert.strictEqual(true, mod.anyTrue([false, 1 === 1]))
+    assert.strictEqual(false, mod.anyTrue([false, 1 === 0]))
+    assert.strictEqual(false, mod.anyTrue([false, () => 1 === 0]))
+  }),
+  test('anyFalse: It should return true if any item is False', () => {
+    assert.strictEqual(true, mod.anyFalse([false,  1 === 1]))
+    assert.strictEqual(false, mod.anyFalse([true, 1 === 1, () => 1 === 1]))
   })
 ]
 

@@ -172,3 +172,17 @@ exports._isEmpty = a => exports.make(exports.isEmpty, a)
 
 exports.isNotEmpty = a => !exports.isEmpty(a)
 exports._isNotEmpty = a => exports.make(exports.isNotEmpty, a)
+
+// Lazy things
+exports.any = (pred, arr) => {
+  for (let i = 0; i < arr.length; i++) {
+    const thing = exports.isFunction(arr[i]) ? arr[i]() : arr[i]
+    if (pred(thing)) {
+      return true
+    }
+  }
+  return false
+}
+
+exports.anyTrue = arr => exports.any(exports.isTrue, arr)
+exports.anyFalse = arr => exports.any(exports.isFalse, arr)
