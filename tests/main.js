@@ -22,6 +22,25 @@ const cases = [
     assert.strictEqual(got, undefined)
   }),
 
+  // Composition
+  test('make: It should return a function', () =>{
+    const got = mod.make('foo', 'bar')
+    assert.strictEqual(typeof got, 'function')
+  }),
+  test('make: It should pass the rest of the arguments to the function it returns', () =>{
+    const state = []
+    const fn = (...args) => state.push(...args)
+
+    const got = mod.make(fn, 'bar', 'baz', 1, 2, 3)
+    got()
+    assert.strictEqual(state.length, 5)
+    assert.strictEqual(state[0], 'bar')
+    assert.strictEqual(state[1], 'baz')
+    assert.strictEqual(state[2], 1)
+    assert.strictEqual(state[3], 2)
+    assert.strictEqual(state[4], 3)
+  }),
+
   // Comparison
   test('eq: It should compare primitives', () => {
     const op1 = 1
@@ -210,6 +229,13 @@ const cases = [
   test('isFalse: neg: It should check if something is "false"', () => {
     const got = mod.isFalse(true)
     assert.strictEqual(got, false)
+  }),
+
+  test('_isTrue: ensure make is working', () => {
+    const got = mod._isTrue(true)
+    assert.strictEqual(typeof got, 'function')
+    const delayedGot = got()
+    assert.strictEqual(delayedGot, true)
   }),
 
   // Type

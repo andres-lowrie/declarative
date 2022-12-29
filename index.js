@@ -63,8 +63,15 @@ exports.merge = exports.mkMerge(true)
 exports.impureMerge = exports.merge
 exports.pureMerge = exports.mkMerge(false)
 
+// Composition
+exports.make = (...args) => {
+  const [fn, ...bargs] = args
+  return () => fn(...bargs)
+}
+
 // Comparison
 exports.isTrue = a => a === true
+exports._isTrue = a => exports.make(exports.isTrue, a)
 
 exports.isFalse = a => a === false
 
