@@ -1,6 +1,6 @@
 {
   "name": "@andres-lowrie/declarative",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Set of functions for more declarative programming",
   "main": "index.js",
   "directories": {
