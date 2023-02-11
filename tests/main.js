@@ -523,7 +523,7 @@ const cases = [
   }),
 
   // Lazy things
-  test('any: It should return first function in array that passes the predicatee', () => {
+  test('any: It should return first function in array that passes the predicate', () => {
     const pred = mod.isTrue
     const arr = [mod._isFalse(true), mod._isTrue(true), () => 'break if this']
     const got = mod.any(pred, arr)
