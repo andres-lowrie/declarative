@@ -544,8 +544,44 @@ const cases = [
     assert.strictEqual(false, mod.anyTrue([false, () => 1 === 0]))
   }),
   test('anyFalse: It should return true if any item is False', () => {
-    assert.strictEqual(true, mod.anyFalse([false,  1 === 1]))
+    assert.strictEqual(true, mod.anyFalse([false, 1 === 1]))
     assert.strictEqual(false, mod.anyFalse([true, 1 === 1, () => 1 === 1]))
+  }),
+
+  // Loops/Collections
+  test('forEach: It should loop over an array', () => {
+    const want = [1, 0, [1]]
+    let got = undefined
+
+    const fn = (...args) => {
+      got = args
+    }
+    mod.forEach([1], fn)
+    assert.deepStrictEqual(got, want)
+  }),
+  test('forEach: It should loop over an object', () => {
+    const want = [['k', 1], 0, [['k', 1]]]
+    let got = undefined
+
+    const fn = (...args) => {
+      got = args
+    }
+    mod.forEach({ k: 1 }, fn)
+    assert.deepStrictEqual(got, want)
+  }),
+  test('forEach: It should loop over an object, allowing for k,v', () => {
+    const wantK = 'k'
+    const wantV = 'v'
+    let gotK,
+      gotV = undefined
+
+    const fn = ([k, v]) => {
+      gotK = k
+      gotV = v
+    }
+    mod.forEach({ k: 'v' }, fn)
+    assert.deepStrictEqual(gotK, wantK)
+    assert.deepStrictEqual(gotV, wantV)
   })
 ]
 

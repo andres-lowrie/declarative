@@ -104,6 +104,9 @@ exports._isFunction = a => exports.make(exports.isFunction, a)
 exports.isArray = Array.isArray
 exports._isArray = (...args) => exports.make(exports.isArray, ...args)
 
+exports.isNotArray = a => !Array.isArray(a)
+exports._isNotArray = (...args) => exports.make(exports.isNotArray, ...args)
+
 exports.isString = a => typeof a === 'string'
 exports._isString = a => exports.make(exports.isString, a)
 
@@ -186,3 +189,11 @@ exports.any = (pred, arr) => {
 
 exports.anyTrue = arr => exports.any(exports.isTrue, arr)
 exports.anyFalse = arr => exports.any(exports.isFalse, arr)
+
+// Loops/Collections
+exports.forEach = (a, f) => {
+  if (exports.isArray(a)) {
+    return a.forEach(f)
+  }
+  return exports.forEach(exports.pairs(a), f)
+}
