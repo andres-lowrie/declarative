@@ -495,6 +495,57 @@ const cases = [
     assert.deepEqual(['b', 2], mod.last(obj))
   }),
 
+  test('keyIn: should check if key in array', () => {
+    const got = mod.keyIn('a', ['c', 'b', 'a'])
+    assert.strictEqual(got, true)
+  }),
+
+  test('keyIn: should check if key not in array', () => {
+    const got = mod.keyIn('d', ['c', 'b', 'a'])
+    assert.strictEqual(got, false)
+  }),
+
+  test('keyIn: should check if key in object', () => {
+    const got = mod.keyIn('a', { c: 'b', a: 'd' })
+    assert.strictEqual(got, true)
+  }),
+
+  test('keyIn: should check if key not in object', () => {
+    const got = mod.keyIn('x', { c: 'b', a: 'd' })
+    assert.strictEqual(got, false)
+  }),
+
+  test('_keyIn', () => {
+    const got = mod._keyIn('a', ['c', 'b', 'a'])
+    assert.strictEqual(got(), true)
+  }),
+
+  test('keyNotIn: should check if key in array', () => {
+    const got = mod.keyNotIn('a', ['c', 'b', 'a'])
+    assert.strictEqual(got, false)
+  }),
+
+  test('keyNotIn: should check if key not in array', () => {
+    const got = mod.keyNotIn('d', ['c', 'b', 'a'])
+    assert.strictEqual(got, true)
+  }),
+
+  test('keyNotIn: should check if key in object', () => {
+    const got = mod.keyNotIn('a', { c: 'b', a: 'd' })
+    assert.strictEqual(got, false)
+  }),
+
+  test('keyNotIn: should check if key not in object', () => {
+    const got = mod.keyNotIn('x', { c: 'b', a: 'd' })
+    assert.strictEqual(got, true)
+  }),
+
+  test('_keyNotIn', () => {
+    const got = mod._keyNotIn('a', ['c', 'b', 'a'])
+    assert.strictEqual(got(), false)
+  }),
+
+
   // Checks
   test('isEmpty: should check length of array or object is empty', () => {
     assert.strictEqual(true, mod.isEmpty([]))

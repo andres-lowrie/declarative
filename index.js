@@ -168,6 +168,20 @@ exports.last = a => {
 }
 exports._last = a => exports.make(exports.last, a)
 
+exports.keyIn = (k, a) => {
+  if (exports.isArray(a)) {
+    return a.includes(k)
+  }
+
+  if (exports.isObject(a)) {
+    return a.hasOwnProperty(k)
+  }
+}
+exports._keyIn = (k, a) => exports.make(exports.keyIn, k, a)
+
+exports.keyNotIn = (...args) => !exports.keyIn(...args)
+exports._keyNotIn = (...args) => exports.make(exports.keyNotIn, ...args)
+
 // Checks
 
 exports.isEmpty = a => exports.length(a) === 0
