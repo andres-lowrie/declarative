@@ -572,6 +572,24 @@ const cases = [
     assert.strictEqual(true, mod._isNotEmpty([1])())
     assert.strictEqual(true, mod._isNotEmpty({ a: 1 })())
   }),
+  test('allTrue: It should return true only if all items are true', () => {
+    assert.strictEqual(true, mod.allTrue([true, 1 === 1]))
+    assert.strictEqual(false, mod.allTrue([false, 1 === 0]))
+  }),
+  test('_allTrue', () => {
+    assert.strictEqual(true, mod._allTrue([true, 1 === 1])())
+    assert.strictEqual(false, mod._allTrue([false, 1 === 0])())
+  }),
+  test('allFalse: It should return true only if all items are false', () => {
+    assert.strictEqual(false, mod.allFalse([true, 1 === 1]))
+    assert.strictEqual(true, mod.allFalse([false, 1 === 0]))
+    assert.strictEqual(false, mod.allFalse([false, 1 === 1]))
+  }),
+  test('_allFalse', () => {
+    assert.strictEqual(false, mod._allFalse([true, 1 === 1])())
+    assert.strictEqual(true, mod._allFalse([false, 1 === 0])())
+    assert.strictEqual(false, mod._allFalse([false, 1 === 1])())
+  }),
 
   // Lazy things
   test('any: It should return first function in array that passes the predicate', () => {

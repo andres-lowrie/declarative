@@ -190,6 +190,12 @@ exports._isEmpty = a => exports.make(exports.isEmpty, a)
 exports.isNotEmpty = a => !exports.isEmpty(a)
 exports._isNotEmpty = a => exports.make(exports.isNotEmpty, a)
 
+exports.allTrue = arr => arr.every(exports.isTrue)
+exports._allTrue = (...args) => exports.make(exports.allTrue, ...args)
+
+exports.allFalse = arr => arr.every(exports.isFalse)
+exports._allFalse = (...args) => exports.make(exports.allFalse, ...args)
+
 // Lazy things
 exports.any = (pred, arr) => {
   for (let i = 0; i < arr.length; i++) {
@@ -200,9 +206,12 @@ exports.any = (pred, arr) => {
   }
   return false
 }
+exports._any = (...args) => exports.make(exports.any, ...args)
 
 exports.anyTrue = arr => exports.any(exports.isTrue, arr)
+exports._anyTrue = (...args) => exports.make(exports.anyTrue, ...args)
 exports.anyFalse = arr => exports.any(exports.isFalse, arr)
+exports._anyFalse = (...args) => exports.make(exports.anyFalse, ...args)
 
 // Loops/Collections
 exports.forEach = (a, f) => {
@@ -211,3 +220,4 @@ exports.forEach = (a, f) => {
   }
   return exports.forEach(exports.pairs(a), f)
 }
+exports._forEach = (...args) => exports.make(exports.forEach, ...args)
