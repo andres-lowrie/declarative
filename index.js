@@ -98,6 +98,10 @@ exports._isTrue = a => exports.make(exports.isTrue, a)
 exports.isFalse = a => a === false
 exports._isFalse = a => exports.make(exports.isFalse, a)
 
+exports.isBoolean = a =>
+  exports.anyTrue([exports.isTrue, exports.isFalse].map(f => f(a)))
+exports._isBoolean = a => exports.make(exports.isBoolean, a)
+
 exports.isFunction = a => typeof a === 'function'
 exports._isFunction = a => exports.make(exports.isFunction, a)
 
@@ -144,6 +148,21 @@ exports._isUndefined = a => exports.make(exports.isUndefined, a)
 
 exports.isDefined = a => !exports.isUndefined(a)
 exports._isDefined = a => exports.make(exports.isDefined, a)
+
+exports.isPrimitive = a =>
+  exports.anyTrue(
+    [
+      exports.isString,
+      exports.isNumber,
+      exports.isBoolean,
+      exports.isUndefined,
+      exports.isSymbol,
+      exports.isNull
+    ].map(f => f(a))
+  )
+exports._isPrimitive = a => exports.make(exports.isPrimitive, a)
+exports.isNotPrimitive = a => !exports.isPrimitive(a)
+exports._isNotPrimitive = a => exports.make(exports.isNotPrimitive, a)
 
 // Access
 exports.first = a => {

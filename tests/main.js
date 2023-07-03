@@ -116,6 +116,46 @@ const cases = [
     const got = mod._lte(op1, op2)
     assert.strictEqual(got(), want)
   }),
+  test('isPrimitive: It should handle objects', () => {
+    const input = {}
+    const got = mod.isPrimitive(input)
+    assert.strictEqual(got, false)
+  }),
+  test('isPrimitive: It should handle arrays', () => {
+    const input = []
+    const got = mod.isPrimitive(input)
+    assert.strictEqual(got, false)
+  }),
+  test('isPrimitive: It should handle functions', () => {
+    const input = () => {}
+    const got = mod.isPrimitive(input)
+    assert.strictEqual(got, false)
+  }),
+  test('_isPrimitive', () => {
+    const input = () => {}
+    const got = mod._isPrimitive(input)()
+    assert.strictEqual(got, false)
+  }),
+  test('isNotPrimitive: It should handle objects', () => {
+    const input = {}
+    const got = mod.isNotPrimitive(input)
+    assert.strictEqual(got, true)
+  }),
+  test('isNotPrimitive: It should handle arrays', () => {
+    const input = []
+    const got = mod.isNotPrimitive(input)
+    assert.strictEqual(got, true)
+  }),
+  test('isNotPrimitive: It should handle functions', () => {
+    const input = () => {}
+    const got = mod.isNotPrimitive(input)
+    assert.strictEqual(got, true)
+  }),
+  test('_isNotPrimitive', () => {
+    const input = []
+    const got = mod._isNotPrimitive(input)()
+    assert.strictEqual(got, true)
+  }),
 
   // Object methods
   test('keys: It should call Object.keys', () => {
@@ -464,6 +504,16 @@ const cases = [
     assert.strictEqual(true, mod._isDefined('undefined')())
     assert.strictEqual(true, mod._isDefined(false)())
     assert.strictEqual(true, mod._isDefined({})())
+  }),
+  test('isBoolean: should be true when passed true or false; false otherwise', () => {
+    assert.strictEqual(true, mod.isBoolean(true))
+    assert.strictEqual(true, mod.isBoolean(false))
+    assert.strictEqual(false, mod.isBoolean())
+  }),
+  test('_isBoolean', () => {
+    assert.strictEqual(true, mod._isBoolean(true)())
+    assert.strictEqual(true, mod._isBoolean(false)())
+    assert.strictEqual(false, mod._isBoolean()())
   }),
 
   // Access
